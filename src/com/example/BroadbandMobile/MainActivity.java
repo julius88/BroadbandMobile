@@ -22,7 +22,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.main);
 
         JSONParser parser = new JSONParser();
-
+        parser.simulateLoadData();
 
 
         GraphViewSeries exampleSeries = new GraphViewSeries(new GraphViewData[] {

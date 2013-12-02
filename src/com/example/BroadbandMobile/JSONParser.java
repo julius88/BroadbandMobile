@@ -54,6 +54,7 @@ public class JSONParser
             bufferedReader.close();
             this._result = stringBuffer.toString();
             System.out.println(this._result+"page");
+            parseJSON(this._result);
         }
         finally
         {
@@ -69,6 +70,14 @@ public class JSONParser
                 }
             }
         }
+    }
+
+    private void parseJSON(String data) {
+        JSONArray root = new JSONArray(data);
+        JSONObject settings = root.getJSONObject(0);
+        JSONArray values = root.getJSONArray(1);
+
+
     }
 	
 	public BroadbandData getResult() {
