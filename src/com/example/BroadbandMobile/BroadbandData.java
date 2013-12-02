@@ -13,8 +13,14 @@ public class BroadbandData
 	private ArrayList<BroadbandPoint> _data;
     private BroadbandGrapher broadbandGrapher;
 
-    public final int LINEGRAPH = 1;
-    public final int BARGRAPH = 2;
+    public final int LINEGRAPH = 101;
+    public final int BARGRAPH = 102;
+
+    public final int XHOUR = 1001;
+    public final int XDAY = 1002;
+    public final int XMONTH = 1003;
+    public final int XYEAR = 1004;
+    public final int XMANYYEARS = 1005;
 
 	public BroadbandData(){
 		super();

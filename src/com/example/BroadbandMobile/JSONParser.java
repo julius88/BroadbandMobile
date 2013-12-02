@@ -1,7 +1,18 @@
 package com.example.BroadbandMobile;
 
 
+import android.util.Log;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.CoreProtocolPNames;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * <!-- begin-user-doc -->
@@ -11,89 +22,66 @@ import java.net.URI;
 
 public class JSONParser
 {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	private URI _uri;
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	private BroadbandData _result;
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 */
+	private String _result;
+	private BroadbandData _data;
+
 	public JSONParser(){
 		super();
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public void loadData(String url) {
-		// TODO : to implement	
-	}
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public URI getUri() {
-		// TODO : to implement
-		return this._uri;
-	}
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public void setUri(URI uri) {
-		// TODO : to implement	
-	}
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
+	public void loadData(String url) throws Exception{
+
+        BufferedReader bufferedReader = null;
+        try
+        {
+            HttpClient client = new DefaultHttpClient();
+            client.getParams().setParameter(CoreProtocolPNames.USER_AGENT, "android");
+            HttpGet request = new HttpGet();
+            request.setHeader("Content-Type", "text/plain; charset=utf-8");
+            request.setURI(new URI(url));
+            HttpResponse response = client.execute(request);
+            bufferedReader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+
+            StringBuffer stringBuffer = new StringBuffer("");
+            String line = "";
+
+            String NL = System.getProperty("line.separator");
+            while ((line = bufferedReader.readLine()) != null)
+            {
+                stringBuffer.append(line + NL);
+                System.out.print(stringBuffer);
+            }
+            bufferedReader.close();
+            this._result = stringBuffer.toString();
+            System.out.println(this._result+"page");
+        }
+        finally
+        {
+            if (bufferedReader != null)
+            {
+                try
+                {
+                    bufferedReader.close();
+                }
+                catch (IOException e)
+                {
+                    Log.d("BBB", e.toString());
+                }
+            }
+        }
+    }
 	
 	public BroadbandData getResult() {
-		// TODO : to implement
-		return new BroadbandData();	
+		return this._data;
 	}
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public void simulateData() {
-		// TODO : to implement	
-	}
-	
+
+	public void simulateLoadData() {
+        String url = "https://dl.dropboxusercontent.com/u/1739967/data.json";
+        try {
+            this.loadData(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
 
