@@ -2,6 +2,8 @@ package com.example.BroadbandMobile;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BroadbandData
 {
@@ -12,34 +14,69 @@ public class BroadbandData
     private int _graphtype;
 	private ArrayList<BroadbandPoint> _data;
     private BroadbandGrapher broadbandGrapher;
+    private Map<String, Integer> _xdata;
+    private Map<String, Integer> _ydata;
 
-    public final int LINEGRAPH = 101;
-    public final int BARGRAPH = 102;
+    public static final int LINEGRAPH = 101;
+    public static final int BARGRAPH = 102;
 
-    public final int XHOUR = 1001;
-    public final int XDAY = 1002;
-    public final int XMONTH = 1003;
-    public final int XYEAR = 1004;
-    public final int XMANYYEARS = 1005;
+    public static final int XHOUR = 1001;
+    public static final int XDAY = 1002;
+    public static final int XMONTH = 1003;
+    public static final int XYEAR = 1004;
+    public static final int XMANYYEARS = 1005;
+
+    public static final int YKWH = 2001;
 
 	public BroadbandData(){
-		super();
+        this._data = new ArrayList<BroadbandPoint>();
+
+        this._xdata = new HashMap<String, Integer>();
+        this._ydata = new HashMap<String, Integer>();
+
+        this._xdata.put("year", XYEAR);
+
+        this._ydata.put("kwh", YKWH);
 	}
 
     public int getXtype() {
         return _xtype;
     }
 
+    public double getMin() {
+        double ret = this._data.get(0).getY();
+        for (int i = 1; i < this._data.size(); i++) {
+            if (ret > this._data.get(i).getY()) {
+                ret = this._data.get(i).getY();
+            }
+        }
+        return ret;
+    }
+
+    public double getMax() {
+        double ret = this._data.get(0).getY();
+        for (int i = 1; i < this._data.size(); i++) {
+            if (ret < this._data.get(i).getY()) {
+                ret = this._data.get(i).getY();
+            }
+        }
+        return ret;
+    }
+
     public void setXtype(int _xtype) {
         this._xtype = _xtype;
+    }
+
+    public void setXtype(String _xtype) {
+        this._xtype = this._xdata.get(_xtype);
     }
 
     public int getYtype() {
         return _ytype;
     }
 
-    public void setYtype(int _ytype) {
-        this._ytype = _ytype;
+    public void setYtype(String _ytype) {
+        this._ytype = this._ydata.get(_ytype);
     }
 
     public String getXlabel() {
@@ -84,5 +121,9 @@ public class BroadbandData
 	public void clear() {
 		this._data.clear();
 	}
+
+    public BroadbandPoint getPoint(int index) {
+        return this._data.get(index);
+    }
 }
 
