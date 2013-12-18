@@ -13,7 +13,6 @@ public class BroadbandData
     private String _ylabel;
     private int _graphtype;
 	private ArrayList<BroadbandPoint> _data;
-    private BroadbandGrapher broadbandGrapher;
     private Map<String, Integer> _xdata;
     private Map<String, Integer> _ydata;
 
@@ -28,7 +27,11 @@ public class BroadbandData
 
     public static final int YKWH = 2001;
 
+
+
+
 	public BroadbandData(){
+
         this._data = new ArrayList<BroadbandPoint>();
 
         this._xdata = new HashMap<String, Integer>();
@@ -50,6 +53,7 @@ public class BroadbandData
                 ret = this._data.get(i).getY();
             }
         }
+
         return ret;
     }
 

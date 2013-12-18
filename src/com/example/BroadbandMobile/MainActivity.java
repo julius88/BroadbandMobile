@@ -30,7 +30,10 @@ public class MainActivity extends Activity {
 
         final Handler handler = new Handler();
 
-
+        /**
+         * Thread
+         * Hakee dataa joka 4:s sekunti.
+         */
         Runnable realtime = new Runnable() {
             @Override
             public void run() {
@@ -41,6 +44,10 @@ public class MainActivity extends Activity {
         realtime.run();
 
 
+        /**
+         * Thread
+         * Tarkistaa, onko data valmis -> piirretään
+         */
         Runnable runnable = new Runnable() {
             @Override
             public void run() {

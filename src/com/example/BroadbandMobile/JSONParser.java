@@ -17,12 +17,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 
-/**
- * <!-- begin-user-doc -->
- * <!--  end-user-doc  -->
- * @generated
- */
-
 public class JSONParser
 {
 	private String _result;
